@@ -53,11 +53,11 @@ public class JavaFXPresenter implements Initializable {
 
 	@Inject
 	JavaFX javaFX;
-	
-	Stage primaryStage = null;
-	
+
 	//The logger for this class
 	private Object logger = null;
+	
+	Stage primaryStage = null;
 
 	public Stage getPrimaryStage() {
 		return( primaryStage );
@@ -105,10 +105,13 @@ public class JavaFXPresenter implements Initializable {
 	private void bindFieldsToJavaFXModel(JavaFX javaFX) {
 		try {
             	editAreaProperty = javaFX.getEditAreaProperty();
-            	
             	editAreaProperty.bindBidirectional(editArea.textProperty());
-            
-            	editAreaProperty.addListener(new ChangeListener<String>() {	@Override public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {			javaFX.setEditArea 		   (newValue);			String message ="Changing editAreaProperty                from " + oldValue + " to " + newValue;			logMessage(message );				}	});
+            	editAreaProperty.addListener(
+            		new ChangeListener<String>() {
+            			@Override public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            				javaFX.setEditArea(newValue);
+           				}
+            		} );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

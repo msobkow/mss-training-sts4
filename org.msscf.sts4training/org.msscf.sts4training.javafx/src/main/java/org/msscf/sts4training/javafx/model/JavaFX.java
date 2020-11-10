@@ -21,8 +21,13 @@ public class JavaFX {
 //	Set<Criteria> setOfCriteria = new HashSet<>();
 //	Set<StoryLabel> storyLabels = new HashSet<>();
 
-	public String getFontChoice			   () {		return fontChoice            .get           ();	}	public void setFontChoice			 (String aStringFontChoice			  ) {		this.fontChoice			   .setValue(aStringFontChoice			  );	}	public StringProperty getFontChoiceProperty            () {		return fontChoice            ;	}
-	public String getEditArea			   () {		return editArea              .get           ();	}	public void setEditArea				 (String aStringEditArea			  ) {		this.editArea			   .setValue(aStringEditArea			  );	}	public StringProperty getEditAreaProperty   		   () {		return editArea              ;	}
+	public String getFontChoice() {	return fontChoice.get(); }
+	public void setFontChoice(String aStringFontChoice ) { this.fontChoice.setValue(aStringFontChoice ); }
+	public StringProperty getFontChoiceProperty() {	return fontChoice; }
+	
+	public String getEditArea() { return editArea.get(); }
+	public void setEditArea(String aStringEditArea) { this.editArea.setValue(aStringEditArea); }
+	public StringProperty getEditAreaProperty() { return editArea; }
 
 	@Override
 	public String toString() {
