@@ -10,5 +10,6 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>org.msscf.sts4training.config</module>
+		<module>org.msscf.sts4training.javafx</module>
 	</modules>
 </project>
