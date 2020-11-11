@@ -23,18 +23,75 @@
 package org.msscf.sts4training.javafx;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+
+import java.io.IOException;
+
 import org.msscf.sts4training.javafx.ui.JavaFXApplicationFx;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 @SpringBootApplication
-public class JavaFXApplication {
-	@Value("${spring.application.name}")
-	private String name;
+public class JavaFXApplication extends Application {
+
+//	@Value("${spring.application.name}")
+//	private String name;
+
+	/*
+	 * The vast majority of the code in this file was taken from
+	 * the JavaFX-Spring4 integration sample provided by Mario
+	 * Jauvin of MFJ Associates at https://github.com/marioja/javafx/
+	 * 
+	 * The code in question comes from the "mfx11boot" sample, slightly
+	 * modified to comply with the resource naming of my code base.
+	 * 
+	 * As such, anyone copying this code should credit Mario as I just
+	 * did; he provided the heavy lifting for getting the two tool
+	 * chains integrated.
+	 */
+	private static String[] savedArgs;
+	private ConfigurableApplicationContext context;
+	
+	@Override
+	public void init() throws Exception {
+		this.context = SpringApplication.run( JavaFXApplication.class, savedArgs );
+	}
+
+	@Override
+	public void stop() throws Exception {
+		context.close();
+		System.gc();
+		System.runFinalization();
+	}
+	
+	private Object createControllerForType( Class<?> type ) {
+		return this.context.getBean( type );
+	}
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		try {
+			FXMLLoader loader=new FXMLLoader(getClass().getResource("JavaFX.fxml"));
+			loader.setControllerFactory(this::createControllerForType);
+			Parent root = loader.load();
+			Scene scene = new Scene(root,800,400);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(IOException e) {
+			throw new IllegalStateException("Unable to load view:", e);
+		}
+	}
 	
 	public static void main(String[] args) {
 		System.out.println("JavaFXApplication main called");
-		Application.launch(JavaFXApplicationFx.class, args);
+		//Application.launch(JavaFXApplicationFx.class, args);
+		savedArgs = args;
+		launch( args );
 	}
 }
