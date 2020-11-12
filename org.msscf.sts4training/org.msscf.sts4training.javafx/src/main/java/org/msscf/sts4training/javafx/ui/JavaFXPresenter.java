@@ -60,9 +60,6 @@ public class JavaFXPresenter implements Initializable {
     private URL location;
 
     @FXML
-    private GridPane mainGrid;
-
-    @FXML
     private Label mainLabel;
 
     @FXML
@@ -93,7 +90,6 @@ public class JavaFXPresenter implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		this.location = location;
 		this.resources = resources;
-    	if( mainGrid == null ) { throw new RuntimeException( "fx:id=\"mainGrid\" was not injected" ); }
     	if( mainLabel == null ) { throw new RuntimeException( "fx:id=\"mainLabel\" was not injected" ); }
     	if( fontChoice == null ) { throw new RuntimeException( "fx:id=\"fontChoice\" was not injected" ); }
     	if( editArea == null ) { throw new RuntimeException( "fx:id=\"editArea\" was not injected" ); }
@@ -179,15 +175,6 @@ public class JavaFXPresenter implements Initializable {
 		mainLabel = value;
 	}
 
-
-	public GridPane getMainGrid() {
-		return mainGrid;
-	}
-	
-	public void setMainGrid( GridPane value ) {
-		mainGrid = value;
-	}
-	
 	public StringProperty getEditAreaProperty() {
 		return editAreaProperty;
 	}
