@@ -6,6 +6,9 @@ Rather, it is my personal playground for learning how to work with
 various Spring 4 technologies I'll need for my own
 MSS Code Forge Environment project (MssCFe.)
 
+You'll find the documentation for this project at
+https://msobkow.github.io/mss-training-sts4/.
+
 	Copyright 2020 Mark Stephen Sobkow
 	
 	Licensed under the Apache License, Version 2.0 (the "License");
