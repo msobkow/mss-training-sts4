@@ -22,11 +22,14 @@
  */
 package org.msscf.sts4training.javafx.model;
 
+import org.springframework.stereotype.Component;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+@Component
 public class JavaFX {
 
 	StringProperty fontChoice = new SimpleStringProperty();

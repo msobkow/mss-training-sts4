@@ -26,6 +26,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import org.msscf.sts4training.javafx.model.JavaFX;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 
@@ -49,9 +51,10 @@ import lombok.Setter;
  *
  * @author TournamentHouse.com
  */
+@Component
 @Setter
 @Getter
-public class JavaFXPresenter implements Initializable {
+public class JavaFXPresenter implements Initializable, InitializingBean {
 
 //    @FXML
     private ResourceBundle resources;
@@ -85,9 +88,18 @@ public class JavaFXPresenter implements Initializable {
 	public void setPrimaryStage( Stage value ) {
 		primaryStage = value;
 	}
+    
+    @Override
+    public void afterPropertiesSet() throws Exception {
+    	System.out.println( "Invoking " + getClass().getName() + ".afterPropertiesSet()" );
+    	if( mainLabel == null ) { System.out.println( "fx:id=\"mainLabel\" was not injected" ); }
+    	if( fontChoice == null ) { System.out.println( "fx:id=\"fontChoice\" was not injected" ); }
+    	if( editArea == null ) { System.out.println( "fx:id=\"editArea\" was not injected" ); }
+    }
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		System.out.println( "Invoking " + getClass().getName() + ".initialize()" );
 		this.location = location;
 		this.resources = resources;
     	if( mainLabel == null ) { throw new RuntimeException( "fx:id=\"mainLabel\" was not injected" ); }
