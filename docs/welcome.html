@@ -46,7 +46,7 @@ prototypes - they all leverage example code and documentation and help tips from
 internet at large.  When I run across a new source, I try to comment on the URL in the code,
 but that is as far as any credits to original thought go.
 <p>
-<H3>Architectural Need Prototypes Implement To Date</H3>
+<H3>Architectural Prototypes Implemented So Far</H3>
 <p>
 <H4>org.msscf.sts4training.config</H3>
 <p>
@@ -97,6 +97,57 @@ REST endpoints go; it is a read-only database that needs to be re-implemented
 using the same database schema/model, but with PHP/MySQL providing the
 JSON REST endpoint services so I can host it on a cheap web hosting
 provider instead of a full Java-stack hosting provider.
+<p>
+<H4>org.msscf.sts4training.insecure</H4>
+<p>
+This project will try to pull together pieces of the
+org.msscf.sts4training.jpahb runtime image repository,
+a PostgreSQL network model repository from
+org.msscf.sts4training.jpapgsql, and a knowledge
+base connection via REST to an instance of
+the org.msscf.sts4training.restmysql prototype.
+<p>
+A GUI to tie together all the components in a simple
+hierarchical CRUD/Finder/Components fashion will be built
+on top of the set of JPA repositories, with the goal of having
+the variant on jpahb populated by knowedge base cartridges
+retrieved from restmysql server, and accessing a JSON REST
+set of endpoints for the jpapgsql repository rather than
+embedding the SQL code in the client.
+<p>
+<H4>org.msscf.sts4training.secured</H4>
+<p>
+This variant on org.msscf.sts4training.insecure will
+add OAuth2 security for accessing the model repository.
+<p>
+Some variant on security that can be mapped to a
+LAMP stack for the mysql repository will be used for
+securing read-only access to the data within that
+repository.  This will be record-level security,
+not table level security as with the models.  I
+need to be able to grant clients permission to download
+and run only the rule cartridges that they have a paid
+subscription for.
+<p>
+<H4>org.msscf.sts4training.php</H4>
+<p>
+This will be an attempt to reimplement the secured
+JSON REST interface of the MySQL repository using a
+LAMP stack.  The goal is for it to be a plug-and-play
+replacement for the Spring Boot web service endpoints.
+Again, the goal is only to provide a read-only web
+interface for downloading knowledge base rule cartridges
+the user has a valid subscription for.
+<p>
+<H3>Down the road: Web UIs</H3>
+<p>
+That should pretty much cover the architectural prototypes
+I'll need to cover the MssCFe, and a rather significant chunk
+of the typical bread and butter web stack.
+<p>
+What I'll have to tackle after that is a <i>React</i> web
+interface as that is the most common in-demand user interface
+technology the job market asks for.
 <p>
 <H3>License</H3>
 <p>
