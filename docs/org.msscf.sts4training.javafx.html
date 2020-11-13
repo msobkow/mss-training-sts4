@@ -36,6 +36,44 @@ with client's technology needs.
 This functionality is an essential requirement for any JavaFX GUI clients that wish to
 leverage the Spring Boot infrastructure and service components.
 <p>
+<H3>Overall Architectural Approach</H3>
+<p>
+The overall approach is to have Spring Boot initialize the appication, and to make all
+Controller and Model beans @Component beans so that Spring can resolve them instead of
+FXML.  A general purpose Spring bean constructor is used to construct all objects
+for the JavaFX instance that gets launched, so that all data particaptes in a Spring Bean
+lifecycle.
+<p>
+This does result in some key differences in coding style.  The first obvious difference
+is that the Controller is the focus of all the custom code for a form or window.  There
+is no Presentation object, as JavaFX can infer the Presentation object from the FXML
+document, having the Presentation layer display all widgets, and binding the fx:id identified
+widgets to the Controller at run time.  There may be a means to access the implied
+Presentation layer, but you really aren't supposed to do that with clean MVC GUI code.
+<p>
+The second difference is that there is no View object.  The View in normal FXML is just
+a canned hook between layers that adds no distinctive functionality of its own, so it is
+gone.
+<p>
+GUI objects which need to be bound to the Controller get identified by an fx:id; all other
+GUI elements use normal ids.  No element or widget should ever specify both types of id at
+the same time, of scenebuilder won't produce code for the GUI at all.
+<p>
+With models and components resolved by Spring, you can then resolve other Spring
+resources and services through the usual bean hooks Spring provides.  Ideally you want
+all that bean maipulation to be done by your Model implementations, and keep the Controller
+as simple as possible.  At least that is my usual coding style for such things.  I don't like
+embedding bafck end logic in my GUIs; I like to keep that in the MOdel.
+<p>
+There are new places you can hook into the bean lifecycle, but I didn't find them useful as it isn't
+until JavaFX takes over the bean that any useful or interesting attributes get properly initialized
+and wired.
+<p>
+Note that the code skeletons look very little like those produced as Controller templates by
+scenebuilder, so you'll need to copy-paste and modify a lot of boilerplate that <i>almost</i>
+lends itself to template-driven programming, but not quite.  The differences are a little too subtle
+for me to think I could turn them into generic templates.
+<p>
 <H3>Donations Gratefully Accepted</H3>
 <p>
 If you find any of Mark Stephen Sobkow's projects useful, you can make donations at
