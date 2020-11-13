@@ -46,27 +46,57 @@ prototypes - they all leverage example code and documentation and help tips from
 internet at large.  When I run across a new source, I try to comment on the URL in the code,
 but that is as far as any credits to original thought go.
 <p>
-<H3>org.msscf.sts4training.config</H3>
+<H3>Architectural Need Prototypes Implement To Date</H3>
+<p>
+<H4>org.msscf.sts4training.config</H3>
 <p>
 This rather simple prototype deals with integrating Spring Boot applications with configuration
 property files that can be overridden at the command line in the usual Java CLI fashion.
 <p>
-<H3>org.msscf.sts4training.javafx</H3>
+<H4>org.msscf.sts4training.javafx</H4>
 <p>
 This challenging-to-write prototype integrates JavaFX 14 with OpenJDK 14 and Spring Boot
-using the code provided by Mario Jauvin as the starting point.  Mario's code was based on
-JavaFX 11, OpenJDK 11, and an earlier release of Spring, though, so a lot of changes and
-tweaks had to be coded and tested before I was satisfied that I have the two layers talking
-together properly.
+using the code provided by Mario Jauvin as the starting point.  More details are on the
+sub-page <A Target="Content" HRef="org.msscf.sts4training.javafx.html">org.msscf.sts4training.javafx.html</A>.
 <p>
-Unlike Mario's example, mine provides some simple widgets and demonstrates maintaining and
-integrating an application model with those widgets, rather than just doing the essential
-basic lifting of getting JavaFX to display a GUI that doesn't have any back-end data to
-manipulate.
+<H3>Architectural Prototypes Planned</H3>
 <p>
-There will be later examples that build on this particular code base as I flesh out the
-architectural layer prototypes I need for MssCFe over time and as I find them overlapping
-with client's technology needs.
+<H4>org.msscf.sts4training.jpahb</H4>
+<p>
+I need an in-memory repository for the client's runtime knowledge base and GEL engine,
+and for the in-memory runtime application model instance that is formed from persistent
+repository data in the backend.  The first step, though, is to create a variation of
+the MssCFKb schema, renaming it the GelKb schema and making use of modern coding techniques
+instead of my manufactured RAM layers as produced by the old MSS Code Factory project.
+<p>
+<H4>org.msscf.sts4training.jpapgsql</H4>
+<p>
+I need persistent PostgreSQL instances for the application models in the client's
+hosted service VM for MssCFe that stores their models under their own internal
+security requirements instead of imposing any of my own requirements on the
+repository server provisioning.
+<p>
+This project starts with the basics.  A simple model of the top-level network
+definition objects that contain business application schema models.  I won't
+dive into a full-depth model for MssCFe; my goal is simply to exercise
+inheritance, subclassing, and hopefully some form of polymorphic virtual
+interfaces.  We shall see what I can achieve when I pull out all the stops
+and memories of how to use JPA from old Hibernate syntax with JEE and JBoss/Oracle
+on a project well over a decade ago.  I'd played with some early JPA modelling
+exercises earlier this year; I have a head start on this.
+<p>
+<H4>org.msscf.sts4training.restmysql</H4>
+<p>
+This variant on a persistent repository using MySQL will be defined to
+the point of providing JSON REST service endpoints for a knowledge base
+cartrdige download service to a Spring Boot CLI client that just tries
+to a few cartridges from the repository.
+<p>
+Note that this will NOT be a modifiable database instance as far as the
+REST endpoints go; it is a read-only database that needs to be re-implemented
+using the same database schema/model, but with PHP/MySQL providing the
+JSON REST endpoint services so I can host it on a cheap web hosting
+provider instead of a full Java-stack hosting provider.
 <p>
 <H3>License</H3>
 <p>
