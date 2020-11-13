@@ -27,6 +27,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import com.airhacks.afterburner.injection.Injector;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -70,6 +72,16 @@ public class JavaFXApplication extends Application {
 	public void setLocation( URL value ) {
 		location = value;
 	}
+
+	Stage primaryStage = null;
+
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+	}
 	
 	@Override
 	public void init() throws Exception {
@@ -78,6 +90,7 @@ public class JavaFXApplication extends Application {
 
 	@Override
 	public void stop() throws Exception {
+        Injector.forgetAll();
 		context.close();
 		System.gc();
 		System.runFinalization();
@@ -89,13 +102,19 @@ public class JavaFXApplication extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		System.out.println("JavaFXApplicationFx.start called");
+		this.primaryStage = primaryStage;
 		try {
-			URL location = getClass().getResource( "JavaFX.fxml" );
-			FXMLLoader loader=new FXMLLoader( location );
+			URL location = getClass().getResource( "/fxml/JavaFX.fxml" );
+			FXMLLoader loader = new FXMLLoader( location );
 			loader.setControllerFactory(this::createControllerForType);
-// Tried adding this, makes no difference
+			// Tried adding this, makes no difference
 			loader.setLocation( location );
-			Parent root = loader.load( location );
+//			JavaFXView javaFXView = new JavaFXView();
+//			JavaFXController javaFXPresenter = (JavaFXController)javaFXView.getPresenter();
+//			javaFXPresenter.setPrimaryStage( primaryStage );
+//			loader.setRoot( javaFXView );
+			Parent root = loader.load();
 			Scene scene = new Scene(root,800,400);
 			primaryStage.setScene(scene);
 			primaryStage.show();

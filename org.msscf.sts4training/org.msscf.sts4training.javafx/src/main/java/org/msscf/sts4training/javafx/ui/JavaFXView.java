@@ -24,10 +24,13 @@ package org.msscf.sts4training.javafx.ui;
 
 import java.util.function.Function;
 
+import org.springframework.stereotype.Component;
+
 import com.airhacks.afterburner.views.FXMLView;
 
 import javafx.scene.Parent;
 
+@Component
 public class JavaFXView extends FXMLView{
 	
 //    public JavaFXView(Function<String, Object> injectionContext) {

@@ -22,9 +22,12 @@
  */
 package org.msscf.sts4training.javafx.ui;
 
-import java.beans.JavaBean;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import org.msscf.sts4training.javafx.model.JavaFX;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 
@@ -44,26 +47,21 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 
-import org.msscf.sts4training.javafx.model.JavaFX;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.stereotype.Component;
-
+/**
+ *
+ * @author TournamentHouse.com
+ */
 @Component
-@Getter
-@Setter
-public class JavaFXController implements Initializable, InitializingBean {
+public class JavaFXController implements Initializable {
 
 //    @FXML
-//    private ResourceBundle resources;
+    private ResourceBundle resources;
 
 //    @FXML
-//    private URL location;
+    private URL location;
 
     @FXML
-    private Label mainLabel;
-
-    @FXML
-    private ChoiceBox<String> fontChoice;
+    private ComboBox<String> fontChoice;
 
     @FXML
     private TextArea editArea;
@@ -75,39 +73,35 @@ public class JavaFXController implements Initializable, InitializingBean {
 
 	//The logger for this class
 	private Object logger = null;
+	
+	Stage primaryStage = null;
 
-    @FXML
+	public Stage getPrimaryStage() {
+		return( primaryStage );
+	}
+	
+	public void setPrimaryStage( Stage value ) {
+		primaryStage = value;
+	}
+
+	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-    	final String S_ProcName = getClass().getName() + ".initialize( location, resources )";
+		final String S_ProcName = getClass().getName() + ".initialize( location, resources )";
 		System.out.println( "Invoking " + S_ProcName );
-//		this.location = location;
-//		this.resources = resources;
-    	if( javaFX == null ) { System.out.println( S_ProcName + " javaFX was not injected" ); }
-    	if( mainLabel == null ) { System.out.println( S_ProcName + " fx:id=\"mainLabel\" was not injected" ); }
-    	if( fontChoice == null ) { System.out.println( S_ProcName + " fx:id=\"fontChoice\" was not injected" ); }
-    	if( editArea == null ) { System.out.println( S_ProcName + " fx:id=\"editArea\" was not injected" ); }
-    	
-//    	if( javaFX == null ) { throw new RuntimeException( "javaFX was not injected" ); }
-//    	if( mainLabel == null ) { throw new RuntimeException( "fx:id=\"mainLabel\" was not injected" ); }
-//    	if( fontChoice == null ) { throw new RuntimeException( "fx:id=\"fontChoice\" was not injected" ); }
-//    	if( editArea == null ) { throw new RuntimeException( "fx:id=\"editArea\" was not injected" ); }
-//    	initializeChoices();
-//    	bindFieldsToJavaFXModel(javaFX);
-    }
-    
-    @Override
-    public void afterPropertiesSet() throws Exception {
-    	final String S_ProcName = getClass().getName() + ".afterPropertiesSet()";
-    	System.out.println( "Invoking " + S_ProcName );
-    	if( mainLabel == null ) { System.out.println( S_ProcName + " fx:id=\"mainLabel\" was not injected" ); }
-    	if( fontChoice == null ) { System.out.println( S_ProcName + " fx:id=\"fontChoice\" was not injected" ); }
-    	if( editArea == null ) { System.out.println( S_ProcName + " fx:id=\"editArea\" was not injected" ); }
-    }
+		this.location = location;
+		this.resources = resources;
+		if( location == null ) { throw new RuntimeException( S_ProcName + " location can not be null" ); }
+		if( resources == null ) { System.out.println( S_ProcName + " resources are null" ); }
+    	if( fontChoice == null ) { throw new RuntimeException( S_ProcName + " fx:id=\"fontChoice\" was not injected" ); }
+    	if( editArea == null ) { throw new RuntimeException( S_ProcName + " fx:id=\"editArea\" was not injected" ); }
+    	initializeChoices();
+    	bindFieldsToJavaFXModel(javaFX);
+	}
 
 	private void initializeChoices() {
-    	final String S_ProcName = getClass().getName() + ".initializeChoices()";
-    	System.out.println( "Invoking " + S_ProcName );
-    	if( fontChoice == null ) { throw new RuntimeException( "fx:id=\"fontChoice\" was not injected" ); }
+		final String S_ProcName = getClass().getName() + ".initializeChoices()";
+		System.out.println( "Invoking " + S_ProcName );
+    	if( fontChoice == null ) { throw new RuntimeException( S_ProcName + " fx:id=\"fontChoice\" was not injected" ); }
     	fontChoice.setItems( FXCollections.observableArrayList(
     			"System",
     			"DejaVu Sans",
@@ -130,8 +124,8 @@ public class JavaFXController implements Initializable, InitializingBean {
 	}
 	
 	private void bindFieldsToJavaFXModel(JavaFX javaFX) {
-    	final String S_ProcName = getClass().getName() + ".bindFieldsToJavaFXModel( javaFX )";
-    	System.out.println( "Invoking " + S_ProcName );
+		final String S_ProcName = getClass().getName() + ".bindFieldsToJavaFXModel()";
+		System.out.println( "Invoking " + S_ProcName );
 		try {
             	editAreaProperty = javaFX.getEditAreaProperty();
             	editAreaProperty.bindBidirectional(editArea.textProperty());
@@ -154,36 +148,36 @@ public class JavaFXController implements Initializable, InitializingBean {
 		}
 	}
 
-//	public ResourceBundle getResources() {
-//		return resources;
-//	}
-//
-//	public void setResources( ResourceBundle value ) {
-//		resources = value;
-//	}
-//	
-//	public URL getLocation() {
-//		return location;
-//	}
-//	
-//	public void setLocation( URL value ) {
-//		location = value;
-//	}
+	public ResourceBundle getResources() {
+		return resources;
+	}
 
+	public void setResources( ResourceBundle value ) {
+		resources = value;
+	}
+	
+	public URL getLocation() {
+		return location;
+	}
+	
+	public void setLocation( URL value ) {
+		location = value;
+	}
+
+	public ComboBox<String> getFontChoice() {
+		return fontChoice;
+	}
+
+	public void setFontChoice( ComboBox<String> value ) {
+		this.fontChoice = value;
+	}
+	
 	public TextArea getEditArea() {
 		return editArea;
 	}
 	
 	public void setEditArea(TextArea value) {
 		this.editArea = value;
-	}
-
-	public Label getMainLabel() {
-		return mainLabel;
-	}
-	
-	public void setMainLabel( Label value ) {
-		mainLabel = value;
 	}
 
 	public StringProperty getEditAreaProperty() {

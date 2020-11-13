@@ -103,17 +103,16 @@ public class JavaFXApplicationFx extends Application {
 		System.out.println("JavaFXApplicationFx.start called");
 		this.primaryStage = primaryStage;
 		try {
-			URL location = getClass().getResource( "Main.fxml" );
-			FXMLLoader loader=new FXMLLoader( location );
+			URL location = getClass().getResource( "/fxml/JavaFX.fxml" );
+			FXMLLoader loader = new FXMLLoader( location );
 			loader.setControllerFactory(this::createControllerForType);
-
-			JavaFXView javaFXView = new JavaFXView();
-			JavaFXPresenter javaFXPresenter = (JavaFXPresenter)javaFXView.getPresenter();
-			javaFXPresenter.setPrimaryStage( primaryStage );
-			loader.setRoot( javaFXView );;
-// Tried adding this, makes no difference
+			// Tried adding this, makes no difference
 			loader.setLocation( location );
-			Parent root = loader.load( location );
+//			JavaFXView javaFXView = new JavaFXView();
+//			JavaFXController javaFXPresenter = (JavaFXController)javaFXView.getPresenter();
+//			javaFXPresenter.setPrimaryStage( primaryStage );
+//			loader.setRoot( javaFXView );
+			Parent root = loader.load();
 			Scene scene = new Scene(root,800,400);
 			primaryStage.setScene(scene);
 			primaryStage.show();
