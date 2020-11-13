@@ -22,73 +22,110 @@
  */
 package org.msscf.sts4training.javafx.ui;
 
+import java.io.IOException;
+import java.net.URL;
+
+import org.msscf.sts4training.javafx.JavaFXApplication;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+
 import com.airhacks.afterburner.injection.Injector;
 
 //import com.airhacks.followme.dashboard.DashboardView;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 
+@SpringBootApplication
 public class JavaFXApplicationFx extends Application {
-//	private ConfigurableApplicationContext context;
+
+
+	/*
+	 * The vast majority of the code in this file was taken from
+	 * the JavaFX-Spring4 integration sample provided by Mario
+	 * Jauvin of MFJ Associates at https://github.com/marioja/javafx/
+	 * 
+	 * The code in question comes from the "mfx11boot" sample, slightly
+	 * modified to comply with the resource naming of my code base.
+	 * 
+	 * As such, anyone copying this code should credit Mario as I just
+	 * did; he provided the heavy lifting for getting the two tool
+	 * chains integrated.
+	 */
+	private static String[] savedArgs;
+	private ConfigurableApplicationContext context;
 
 	Stage primaryStage = null;
 
-/*
- * This class is based on https://stackoverflow.com/questions/24875401/is-it-possible-combine-fxinclude-and-afterburner	
- */
-	
-	
-//	private Object createControllerForType(Class<?> type) {
-//		return this.context.getBean(type);
-//	}
-	
-	
-//	@Override
-//	public void init() throws Exception {
-////		ApplicationContextInitializer<GenericApplicationContext> initializer = ac -> {
-////			ac.registerBean(Application.class, () -> StoryboardApplicationFx.this);
-////			ac.registerBean(Parameters.class, this::getParameters);
-////			ac.registerBean(HostServices.class, this::getHostServices);
-////
-////		};
-////		
-////		this.context = new SpringApplicationBuilder().sources(StoryboardApplicationFx.class).initializers(initializer)
-////				.run(getParameters().getRaw().toArray(new String[0]));
-////		ConfigurableApplicationContext aContext = this.context;
-//
-//	}
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
 
-	    @Override
-	    public void start(Stage primaryStage) {
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+	}
+	
+	private URL location;
+	
+	public URL getLocation() {
+		return location;
+	}
+	
+	public void setLocation( URL value ) {
+		location = value;
+	}
+	
+	@Override
+	public void init() throws Exception {
+		this.context = SpringApplication.run( JavaFXApplication.class, savedArgs );
+	}
+
+	@Override
+	public void stop() throws Exception {
+        Injector.forgetAll();
+		context.close();
+		System.gc();
+		System.runFinalization();
+	}
+	
+	private Object createControllerForType( Class<?> type ) {
+		return this.context.getBean( type );
+	}
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
 		System.out.println("JavaFXApplicationFx.start called");
 		this.primaryStage = primaryStage;
-	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Main.fxml"));
-        JavaFXView javaFXView = new JavaFXView();
-        JavaFXPresenter javaFXPresenter = (JavaFXPresenter)javaFXView.getPresenter();
-        javaFXPresenter.setPrimaryStage( primaryStage );
-        fxmlLoader.setRoot( javaFXView );
+		try {
+			URL location = getClass().getResource( "Main.fxml" );
+			FXMLLoader loader=new FXMLLoader( location );
+			loader.setControllerFactory(this::createControllerForType);
 
-	        Scene scene = new Scene(javaFXView.getView(), 800, 400);
-	        primaryStage.setScene(scene);
-	        primaryStage.show();
-	    }
-
-	    @Override
-	    public void stop() throws Exception {
-	        Injector.forgetAll();
-	    }
-
-		public Stage getPrimaryStage() {
-			return primaryStage;
+			JavaFXView javaFXView = new JavaFXView();
+			JavaFXPresenter javaFXPresenter = (JavaFXPresenter)javaFXView.getPresenter();
+			javaFXPresenter.setPrimaryStage( primaryStage );
+			loader.setRoot( javaFXView );;
+// Tried adding this, makes no difference
+			loader.setLocation( location );
+			Parent root = loader.load( location );
+			Scene scene = new Scene(root,800,400);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(IOException e) {
+			throw new IllegalStateException("Unable to load view:", e);
 		}
-
-		public void setPrimaryStage(Stage primaryStage) {
-			this.primaryStage = primaryStage;
-		}
-
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("JavaFXApplication main called");
+		//Application.launch(JavaFXApplicationFx.class, args);
+		savedArgs = args;
+		launch( args );
+	}
 }

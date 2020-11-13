@@ -54,10 +54,10 @@ import org.springframework.stereotype.Component;
 public class JavaFXController implements Initializable, InitializingBean {
 
 //    @FXML
-    private ResourceBundle resources;
+//    private ResourceBundle resources;
 
 //    @FXML
-    private URL location;
+//    private URL location;
 
     @FXML
     private Label mainLabel;
@@ -75,44 +75,38 @@ public class JavaFXController implements Initializable, InitializingBean {
 
 	//The logger for this class
 	private Object logger = null;
-	
-	Stage primaryStage = null;
-
-	public Stage getPrimaryStage() {
-		return( primaryStage );
-	}
-	
-	public void setPrimaryStage( Stage value ) {
-		primaryStage = value;
-	}
 
     @FXML
 	public void initialize(URL location, ResourceBundle resources) {
-		System.out.println( "Invoking " + getClass().getName() + ".initialize()" );
-		this.location = location;
-		this.resources = resources;
-    	if( javaFX == null ) { System.out.println( "javaFX was not injected" ); }
-    	if( mainLabel == null ) { System.out.println( "fx:id=\"mainLabel\" was not injected" ); }
-    	if( fontChoice == null ) { System.out.println( "fx:id=\"fontChoice\" was not injected" ); }
-    	if( editArea == null ) { System.out.println( "fx:id=\"editArea\" was not injected" ); }
+    	final String S_ProcName = getClass().getName() + ".initialize( location, resources )";
+		System.out.println( "Invoking " + S_ProcName );
+//		this.location = location;
+//		this.resources = resources;
+    	if( javaFX == null ) { System.out.println( S_ProcName + " javaFX was not injected" ); }
+    	if( mainLabel == null ) { System.out.println( S_ProcName + " fx:id=\"mainLabel\" was not injected" ); }
+    	if( fontChoice == null ) { System.out.println( S_ProcName + " fx:id=\"fontChoice\" was not injected" ); }
+    	if( editArea == null ) { System.out.println( S_ProcName + " fx:id=\"editArea\" was not injected" ); }
     	
-    	if( javaFX == null ) { throw new RuntimeException( "javaFX was not injected" ); }
-    	if( mainLabel == null ) { throw new RuntimeException( "fx:id=\"mainLabel\" was not injected" ); }
-    	if( fontChoice == null ) { throw new RuntimeException( "fx:id=\"fontChoice\" was not injected" ); }
-    	if( editArea == null ) { throw new RuntimeException( "fx:id=\"editArea\" was not injected" ); }
-    	initializeChoices();
-    	bindFieldsToJavaFXModel(javaFX);
+//    	if( javaFX == null ) { throw new RuntimeException( "javaFX was not injected" ); }
+//    	if( mainLabel == null ) { throw new RuntimeException( "fx:id=\"mainLabel\" was not injected" ); }
+//    	if( fontChoice == null ) { throw new RuntimeException( "fx:id=\"fontChoice\" was not injected" ); }
+//    	if( editArea == null ) { throw new RuntimeException( "fx:id=\"editArea\" was not injected" ); }
+//    	initializeChoices();
+//    	bindFieldsToJavaFXModel(javaFX);
     }
     
     @Override
     public void afterPropertiesSet() throws Exception {
-    	System.out.println( "Invoking " + getClass().getName() + ".afterPropertiesSet()" );
-    	if( mainLabel == null ) { System.out.println( "fx:id=\"mainLabel\" was not injected" ); }
-    	if( fontChoice == null ) { System.out.println( "fx:id=\"fontChoice\" was not injected" ); }
-    	if( editArea == null ) { System.out.println( "fx:id=\"editArea\" was not injected" ); }
+    	final String S_ProcName = getClass().getName() + ".afterPropertiesSet()";
+    	System.out.println( "Invoking " + S_ProcName );
+    	if( mainLabel == null ) { System.out.println( S_ProcName + " fx:id=\"mainLabel\" was not injected" ); }
+    	if( fontChoice == null ) { System.out.println( S_ProcName + " fx:id=\"fontChoice\" was not injected" ); }
+    	if( editArea == null ) { System.out.println( S_ProcName + " fx:id=\"editArea\" was not injected" ); }
     }
 
 	private void initializeChoices() {
+    	final String S_ProcName = getClass().getName() + ".initializeChoices()";
+    	System.out.println( "Invoking " + S_ProcName );
     	if( fontChoice == null ) { throw new RuntimeException( "fx:id=\"fontChoice\" was not injected" ); }
     	fontChoice.setItems( FXCollections.observableArrayList(
     			"System",
@@ -136,6 +130,8 @@ public class JavaFXController implements Initializable, InitializingBean {
 	}
 	
 	private void bindFieldsToJavaFXModel(JavaFX javaFX) {
+    	final String S_ProcName = getClass().getName() + ".bindFieldsToJavaFXModel( javaFX )";
+    	System.out.println( "Invoking " + S_ProcName );
 		try {
             	editAreaProperty = javaFX.getEditAreaProperty();
             	editAreaProperty.bindBidirectional(editArea.textProperty());
@@ -158,21 +154,21 @@ public class JavaFXController implements Initializable, InitializingBean {
 		}
 	}
 
-	public ResourceBundle getResources() {
-		return resources;
-	}
-
-	public void setResources( ResourceBundle value ) {
-		resources = value;
-	}
-	
-	public URL getLocation() {
-		return location;
-	}
-	
-	public void setLocation( URL value ) {
-		location = value;
-	}
+//	public ResourceBundle getResources() {
+//		return resources;
+//	}
+//
+//	public void setResources( ResourceBundle value ) {
+//		resources = value;
+//	}
+//	
+//	public URL getLocation() {
+//		return location;
+//	}
+//	
+//	public void setLocation( URL value ) {
+//		location = value;
+//	}
 
 	public TextArea getEditArea() {
 		return editArea;

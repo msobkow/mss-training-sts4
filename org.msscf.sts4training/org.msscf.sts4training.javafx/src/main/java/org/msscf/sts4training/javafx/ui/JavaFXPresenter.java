@@ -54,7 +54,7 @@ import lombok.Setter;
 @Component
 @Setter
 @Getter
-public class JavaFXPresenter implements Initializable, InitializingBean {
+public class JavaFXPresenter implements Initializable {
 
 //    @FXML
     private ResourceBundle resources;
@@ -88,20 +88,14 @@ public class JavaFXPresenter implements Initializable, InitializingBean {
 	public void setPrimaryStage( Stage value ) {
 		primaryStage = value;
 	}
-    
-    @Override
-    public void afterPropertiesSet() throws Exception {
-    	System.out.println( "Invoking " + getClass().getName() + ".afterPropertiesSet()" );
-    	if( mainLabel == null ) { System.out.println( "fx:id=\"mainLabel\" was not injected" ); }
-    	if( fontChoice == null ) { System.out.println( "fx:id=\"fontChoice\" was not injected" ); }
-    	if( editArea == null ) { System.out.println( "fx:id=\"editArea\" was not injected" ); }
-    }
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println( "Invoking " + getClass().getName() + ".initialize()" );
 		this.location = location;
 		this.resources = resources;
+		if( location == null ) { throw new RuntimeException( "location can not be null" ); }
+		if( resources == null ) { System.out.println( "WARNING: resources are null" ); }
     	if( mainLabel == null ) { throw new RuntimeException( "fx:id=\"mainLabel\" was not injected" ); }
     	if( fontChoice == null ) { throw new RuntimeException( "fx:id=\"fontChoice\" was not injected" ); }
     	if( editArea == null ) { throw new RuntimeException( "fx:id=\"editArea\" was not injected" ); }

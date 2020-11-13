@@ -28,6 +28,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import org.msscf.sts4training.javafx.ui.JavaFXApplicationFx;
 
@@ -36,6 +38,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.BuilderFactory;
 
 @SpringBootApplication
 public class JavaFXApplication extends Application {
@@ -58,6 +61,16 @@ public class JavaFXApplication extends Application {
 	private static String[] savedArgs;
 	private ConfigurableApplicationContext context;
 	
+	private URL location;
+	
+	public URL getLocation() {
+		return location;
+	}
+	
+	public void setLocation( URL value ) {
+		location = value;
+	}
+	
 	@Override
 	public void init() throws Exception {
 		this.context = SpringApplication.run( JavaFXApplication.class, savedArgs );
@@ -77,9 +90,12 @@ public class JavaFXApplication extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {
-			FXMLLoader loader=new FXMLLoader(getClass().getResource("JavaFX.fxml"));
+			URL location = getClass().getResource( "JavaFX.fxml" );
+			FXMLLoader loader=new FXMLLoader( location );
 			loader.setControllerFactory(this::createControllerForType);
-			Parent root = loader.load();
+// Tried adding this, makes no difference
+			loader.setLocation( location );
+			Parent root = loader.load( location );
 			Scene scene = new Scene(root,800,400);
 			primaryStage.setScene(scene);
 			primaryStage.show();
