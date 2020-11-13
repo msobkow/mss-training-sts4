@@ -55,9 +55,9 @@ The second difference is that there is no View object.  The View in normal FXML 
 a canned hook between layers that adds no distinctive functionality of its own, so it is
 gone.
 <p>
-GUI objects which need to be bound to the Controller get identified by an fx:id; all other
+GUI objects which need to be bound to the Controller get identified by an fx:id, but all other
 GUI elements use normal ids.  No element or widget should ever specify both types of id at
-the same time, of scenebuilder won't produce code for the GUI at all.
+the same time, or scenebuilder won't produce code for the GUI at all.
 <p>
 With models and components resolved by Spring, you can then resolve other Spring
 resources and services through the usual bean hooks Spring provides.  Ideally you want
