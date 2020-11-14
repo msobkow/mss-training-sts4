@@ -46,6 +46,11 @@ prototypes - they all leverage example code and documentation and help tips from
 internet at large.  When I run across a new source, I try to comment on the URL in the code,
 but that is as far as any credits to original thought go.
 <p>
+There is a separate page on the <A Target="Content" HRef="msscfe-architectural-notex.html"
+>MssCFe Architectural Notes</A> which describes the architecture I'm tryhing to prototype.
+Where there is disagreement between that document and this document as to the prototype
+modules and their development order and this document, the MssCFe document takes precedence.
+<p>
 <H3>Architectural Prototypes Implemented So Far</H3>
 <p>
 <H4>org.msscf.sts4training.config</H3>
@@ -58,86 +63,6 @@ property files that can be overridden at the command line in the usual Java CLI 
 This challenging-to-write prototype integrates JavaFX 14 with OpenJDK 14 and Spring Boot
 using the code provided by Mario Jauvin as the starting point.  More details are on the
 sub-page <A Target="Content" HRef="org.msscf.sts4training.javafx.html">org.msscf.sts4training.javafx.html</A>.
-<p>
-<H3>Architectural Prototypes Planned</H3>
-<p>
-<H4>org.msscf.sts4training.jpahb</H4>
-<p>
-I need an in-memory repository for the client's runtime knowledge base and GEL engine,
-and for the in-memory runtime application model instance that is formed from persistent
-repository data in the backend.  The first step, though, is to create a variation of
-the MssCFKb schema, renaming it the GelKb schema and making use of modern coding techniques
-instead of my manufactured RAM layers as produced by the old MSS Code Factory project.
-<p>
-<H4>org.msscf.sts4training.jpapgsql</H4>
-<p>
-I need persistent PostgreSQL instances for the application models in the client's
-hosted service VM for MssCFe that stores their models under their own internal
-security requirements instead of imposing any of my own requirements on the
-repository server provisioning.
-<p>
-This project starts with the basics.  A simple model of the top-level network
-definition objects that contain business application schema models.  I won't
-dive into a full-depth model for MssCFe; my goal is simply to exercise
-inheritance, subclassing, and hopefully some form of polymorphic virtual
-interfaces.  We shall see what I can achieve when I pull out all the stops
-and memories of how to use JPA from old Hibernate syntax with JEE and JBoss/Oracle
-on a project well over a decade ago.  I'd played with some early JPA modelling
-exercises earlier this year; I have a head start on this.
-<p>
-<H4>org.msscf.sts4training.restmysql</H4>
-<p>
-This variant on a persistent repository using MySQL will be defined to
-the point of providing JSON REST service endpoints for a knowledge base
-cartrdige download service to a Spring Boot CLI client that just tries
-to a few cartridges from the repository.
-<p>
-Note that this will NOT be a modifiable database instance as far as the
-REST endpoints go; it is a read-only database that needs to be re-implemented
-using the same database schema/model, but with PHP/MySQL providing the
-JSON REST endpoint services so I can host it on a cheap web hosting
-provider instead of a full Java-stack hosting provider.
-<p>
-<H4>org.msscf.sts4training.insecure</H4>
-<p>
-This project will try to pull together pieces of the
-org.msscf.sts4training.jpahb runtime image repository,
-a PostgreSQL network model repository from
-org.msscf.sts4training.jpapgsql, and a knowledge
-base connection via REST to an instance of
-the org.msscf.sts4training.restmysql prototype.
-<p>
-A GUI to tie together all the components in a simple
-hierarchical CRUD/Finder/Components fashion will be built
-on top of the set of JPA repositories, with the goal of having
-the variant on jpahb populated by knowedge base cartridges
-retrieved from restmysql server, and accessing a JSON REST
-set of endpoints for the jpapgsql repository rather than
-embedding the SQL code in the client.
-<p>
-<H4>org.msscf.sts4training.secured</H4>
-<p>
-This variant on org.msscf.sts4training.insecure will
-add OAuth2 security for accessing the model repository.
-<p>
-Some variant on security that can be mapped to a
-LAMP stack for the mysql repository will be used for
-securing read-only access to the data within that
-repository.  This will be record-level security,
-not table level security as with the models.  I
-need to be able to grant clients permission to download
-and run only the rule cartridges that they have a paid
-subscription for.
-<p>
-<H4>org.msscf.sts4training.php</H4>
-<p>
-This will be an attempt to reimplement the secured
-JSON REST interface of the MySQL repository using a
-LAMP stack.  The goal is for it to be a plug-and-play
-replacement for the Spring Boot web service endpoints.
-Again, the goal is only to provide a read-only web
-interface for downloading knowledge base rule cartridges
-the user has a valid subscription for.
 <p>
 <H3>Down the road: Web UIs</H3>
 <p>
