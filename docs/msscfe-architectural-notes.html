@@ -26,38 +26,47 @@ clients.  I just don't have the money to float dedicated hosts running full Java
 <p>
 <H3>Logical Architectural Layering</H3>
 <p>
-<H4>org.msscf.sts4training.rtmjpa</H4>
+<H4>org.msscf.sts4training.cfbmr</H4>
+<p>
+I have selected PostgreSQL as my database-of-choice for my Business
+Model Repepositories, but for the sake of training and prototyping I will
+only be using an H2 in-memory instance for simplicity's sake.  This will
+look a lot like a future CFRtm object hierarchy, which is no wonder as
+CFRtm is a virtualization layer that consolidates multiple Business Model
+Repositories and Schema References into a cohesive whole for the currently
+modeled application.
+<p>
+CFBmr will be bread-and-butter JPA for now, nothing fancy, but full-featured
+and exercising as many features of JPA as I think I'll need in the real
+world - inheritance, object hierarchies, parent and container relationships,
+children and component relationships, lookup relationships, and named lookups.
+<p>
+<H4>org.msscf.sts4training.cfrtm</H4>
 <p>
 This layer defines a Run Time Model in terms of an in-memory JPA
-repository.  Behind the RtmJpa will be any number of
-PsmJpa Persistent Storage Model repositories that provide the
-long-term storage of the models.  The Rtm is a virtualization
-layer that consolidates all of the referenced Psm's into a single
-application model image, which is itself defined as a Psm that
-references the other Psm's.
+repository.  Behind the CFRtm will be any number of CFBmr instances, each
+with one or more referenced schemas imported by the current model in
+memory.  CFRtm is a virtualization layer that consolidates all of the
+referenced CFBmr's into a single virtual service image.
 <p>
-The RtmJpa instances will only reside in the client runtimes for MssCFe;
-there will be no Rtm instances in the web service layers.  The workload for
-manufacturing code needs to be distributed to the clients using the tool,
-as does the disc and storage capacity for Git repositories for that code.
+The CFRtm instances will only reside in the client runtimes for MssCFe for
+now, but I'll probably need them on the server side and in other applications
+as well for synchronizing models and model subscriptions across business model
+respositories that get published to the internet or intranet as applicable.
+<p>
+There will eventually be a WebUI implementation that incoroporates a CFRtm
+instance for sure, as it will be a web variant on what I'm going to be
+creating with JavaFX first.  I think a desktop application is far more
+suitable for the workloads I envision MssCFe provisioning than aweb service
+would be.  It takes far longer to download manufactured code zips than it
+does to manufacture the code locally.  It saves on precious network
+bandwidth, too.
 <p>
 I've decided to use basic Hibernate instances as they only carry a 2MB
 footprint at the client on top of the compiled JPA object models and
 actual run-time storage used.  I can't imagine a leaner way of providing
 JPA logical stores in a memory-caching client suitable for real-world
 environments. 
-<p>
-<H4>org.msscf.sts4training.psmjpa</H4>
-<p>
-I have selected PostgreSQL as my database-of-choice for prototyping
-my Persistent Storage Model repositories.  This will look a lot like
-an RtmJpa object hierarchy, which is no wonder as it is intended to
-persist the partitioned Rtm instance data in the various stores that
-have been referenced by the application.
-<p>
-Very bread-and-butter JPA PostgreSQL instance for now, nothing fancy.
-But I need a properly separated instance in order to build up my
-prototype architectural layers.
 <p>
 <H4>org.msscf.sts4training.kbjpa</H4>
 <p>
