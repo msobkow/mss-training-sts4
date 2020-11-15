@@ -68,13 +68,6 @@ actual run-time storage used.  I can't imagine a leaner way of providing
 JPA logical stores in a memory-caching client suitable for real-world
 environments. 
 <p>
-<H4>org.msscf.sts4training.kbjpa</H4>
-<p>
-The Knowledge Base JPA model gets implemented as a runtime Hibernate
-instance for now, which exists in the client application.  Partnering
-with that will be a persistent PostgreSQL instance used by the
-client's server to host their set of subscribed rule cartridges.
-<p>
 <H4>org.msscf.sts4training.webdocsrv</H4>
 <p>
 The Web Document Service provides read-only access for downloading
@@ -115,6 +108,13 @@ upload interface (I might do that some day anyhow, and just leave it disabled fo
 the deployment server on my web hosting services because it would be far too much work
 to recode in PHP for a LAMP stack.  The upload capabilities would only be provided by
 a <i>Java</i>-based implementation of the service.)
+<p>
+<H4>org.msscf.sts4training.kbjpa</H4>
+<p>
+The Knowledge Base JPA model gets implemented as a runtime Hibernate
+instance for now, which exists in the client application.  Partnering
+with that will be a persistent PostgreSQL instance used by the
+client's server to host their set of subscribed rule cartridges.
 <p>
 <H4>org.msscf.sts4training.kbcartsrv</H4>
 <p>
