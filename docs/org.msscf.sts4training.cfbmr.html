@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!--
+ *	$Revision: 10802 $
+-->
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
+	<META HTTP-EQUIV="CONTENT-SCRIPT-TYPE" content="text/javascript">
+	<META HTTP-EQUIV="CONTENT-STYLE-TYPE" content="text/css">
+	<META HTTP-EQUIV="Cache-Control" content="max-age=0">
+	<META http-equiv="Cache-Control" content="no-cache">
+	<META HTTP-EQUIV="expires" content="0">
+	<META HTTP-EQUIV="Expires" CONTENT="Tue, 01 Jan 1980 1:00:00 GMT">
+	<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+	<TITLE>MSS Training for STS4: org.msscf.sts4training.cfbmr</TITLE>
+	<LINK rel="stylesheet" HRef="css/cf-content.css" type="text/css">
+</HEAD>
+<BODY>
+<H2>Mark Stephen Sobkow's Training for Spring Tool Suite 4: org.msscf.sts4training.cfbmr</H2>
+<p>
+The Code Forge Business Model Repository will be a persistent store in the long run, but
+for the purposes of this training prototype, I'll just be using an H2 instance for storage.
+I won't use a full PostgreSQL instance until later in the training/prototyping life cycles.
+<p>
+I have most of a top level object, the Model Repository table itself.  A given repository
+can hold any number of logical repositories, likely one per project a client is managing
+with MssCFe.
+<p>
+The mapping for the Top Level Domain object is trivial, and doesn't require planning.
+<p>
+The next object triple is a little hairier - I need a Domain object as a base class that
+can own a Project, User, host a Service, or do any number of things.  The subclass
+TopDomain is a subclass of Domain and has a Top Level Domain as its parent, and contain
+SubDomains or the usual domain resources.  A SubDomain contains the usual Domain resources
+or other SubDomains in hierarchical fashion.  I had not enabled full hierarchy definitions
+in MSS Code Factory because I wanted to be compatible with DB/2 LUW, but I'm no longer
+willing to limit my application to satisfy one vendor, who is becoming ever more and more
+irrelevant to my market share as a consultant.
+<p>
+A Project has some interesting changes since MSS Code Factory.  It is going to be a
+"root" entry for a cluster of ProjectBranch instances that add a Branch attribute to the
+key value.  So you can have any number of logical branches of a specific project.
+<p>
+Each ProjectBranch has a BranchName, a MajorVersion number, a MinorVersion number,
+a BuildNumber (6 digits), and a BuildTag.  These form a formatted string of
+<tt>"=MajorVersion_MinorVersion-Build[-BuildTag]"</tt> when versioned file names
+are required, such as the names of .zip files, installer executables, Debian packages,
+and so forth.
+<p>
+There is always a "main" Branch, the same as for Git.  I'm debating adding git hooks
+to the projects so that I can tie in git automatically on the client nodes.  I want
+the code manufacturing, build, and checkin processes to be as automated as possible.
+All I think I'd really need to do is add a GitRepository attribute to a Project, which
+would be used to do initial clones and pushes of projects.
+<p>
+The Project contains SchemaDef instances, which contain optional SchemaRef
+specifications that reference other schemas by fully qualified
+Tld.TopDomain{.SubDomain}.Project.Schema format, with an optional Branch name
+defaulting to "main" if no branch is specified, and an optional Release name
+as well (I realized while writing that I need to identify the releases of a branch
+for reference, not just the branch itself, so that you can reference historical
+releases for the sake of compatibility with newer projects.)
+<P>
+Note that I haven't decided how I'll deal with creating branches, merging branches,
+deleting branches, or doing tagged releases of a branch.  I also need to add another
+sub-object level for a ProjectBranchRelease object as well, which would be a full
+copy of the ProjectBranch in question at the time the Release is created.  So you'd
+work with Branches, but create Releases for the branch, and you'll need to reference
+an optional Release name as well as the Branch name for your SchemaRefs.
+<p>
+I don't intend to do commit tracking at all.  Every change you make is committed
+automatically; the concept of a GIT commit type behaviour outside the meaning of
+"make my current edits persistent" is anathema to a database guy.
+<p>
+That is as far as I'll go with the training prototype.  The rest of my modelling
+information is internal and private for now.  Enjoy this sneak peak at a piece
+of MssCFe.
+<p>
+<H3>Donations Gratefully Accepted</H3>
+<p>
+If you find any of Mark Stephen Sobkow's projects useful, you can make donations at
+<A Target="_blank" HRef="https://www.paypal.com/paypalme2/MarkSobkow">Paypal.me/MarkSobkow</A>.
+<p>
+</BODY>
+</HTML>
