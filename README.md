@@ -23,10 +23,6 @@ https://msobkow.github.io/mss-training-sts4/.
 	See the License for the specific language governing permissions and
 	limitations under the License.
 
-The sub-projects herein are a series of incremental code stacks, each
-building on the last to eventually form a complete code stack with all
-of the features I'll need for the MssCFe project.
-
 Although I believe in test-driven methodology as described by Josh Long,
 this will not be a code base that follows this approach.  You can only
 write tests for new code if you have some idea of how you're supposed
@@ -54,12 +50,20 @@ curve, so I'm making this project and the sub-projects under it
 available under an Apache V2 license.  It is just prototyping and
 test framework code, not a "real" application.
 
-Next on my "todo" list is integrating JavaFX/FXML with Spring 4
-following the training video on the subject presented by Josh
-Long.
+Next on my "todo" list is refreshing my JPA skills with the
+resumption of my work on an outline of the top objects in
+a CFBmr (Code Forge Business Model Repository) to exercise
+the various JPA capabilities I need to have in my coder's toolkit,
+including table-class inheritance, lookup relationships, named
+lookup relationships, parent and container relationships, and
+components and children relationships.  I'll only be using
+an H2 in-memory persistence implementation for the training
+projects; in practice this repository would reside in long-term
+storage, preferably PostgreSQL for my initial rollouts.
 
-I hadn't planned on tackling it for my own needs until I'd addressed
-all of the other layers of a distributed client-server application,
-I'll do a simplified version of it now, and build on it later when
-I have all the layers in place to map out the architecture I have
-envisioned for MssCFe.
+After that I'll be working on an authorization-based read-only
+document server that I can recode the endpoints for in a LAMP
+stack for deployment to my own ISP's infrastructure.  I can't
+afford Java hosting ISPs or cloud provisioning at this time.
+LAMP is the least common denominator for web services, so I'm
+hoping to find some decent JSON and WebSocket support for PHP.
