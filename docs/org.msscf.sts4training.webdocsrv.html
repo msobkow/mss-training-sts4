@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!--
+ *	$Revision: 10802 $
+-->
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
+	<META HTTP-EQUIV="CONTENT-SCRIPT-TYPE" content="text/javascript">
+	<META HTTP-EQUIV="CONTENT-STYLE-TYPE" content="text/css">
+	<META HTTP-EQUIV="Cache-Control" content="max-age=0">
+	<META http-equiv="Cache-Control" content="no-cache">
+	<META HTTP-EQUIV="expires" content="0">
+	<META HTTP-EQUIV="Expires" CONTENT="Tue, 01 Jan 1980 1:00:00 GMT">
+	<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+	<TITLE>MSS Training for STS4: org.msscf.sts4training.webdocsrv</TITLE>
+	<LINK rel="stylesheet" HRef="css/cf-content.css" type="text/css">
+</HEAD>
+<BODY>
+<H2>Mark Stephen Sobkow's Training for Spring Tool Suite 4: org.msscf.sts4training.webdocsrv</H2>
+<p>
+The Web Document Service will provide read-only access for downloading
+a client installation's subscribed documents in order to be able
+to do things like manufacture code.  This service is intended to be
+generic; it just stores text BLOBs that specify a MIME type defining
+their text content type.  All text BLOBs must be valid in the UTF-8
+character set.
+<p>
+The service neither knows nor cares whether the documents are
+properly identified or formed; they're just text BLOBs to it.
+The documents could be XSDs, XML, Open Document types, or Microsoft
+Office document contents as long as they don't embed any binary data.
+<p>
+Documents can be identified and grouped by distribution tags, and an
+individual user's account can be assigned one or more distribution subscription
+tags that reference the distribution tags.  I want to be as flexible
+as possible about how subscriptions are defined and managed, allowing
+for the possibility that there may be mulitiple distribution tags which
+authorize a client to access a particular document.
+<p>
+There is no provisioning for uploading documents.  This is purely a document
+distribution service.
+<p>
+Note that it will NOT be using OAuth2 authentication unless I can figure out a
+way of doing so from PHP.  Although this initial version is being developed in Java,
+I need a LAMP stack version to deploy to my web hosting service.
+<p>
+Because JPA underpins the model of the service, the clients which deploy a modelling
+server will also run these subscription document services for their knowledge base
+rule cartridge documents (Well-formed JSON streams), but it will be populated by copies
+of those documents loaded from the subscription provisioning servers (owned and
+operated by my future corporation.)  The knowledge base document server instance
+will specifically restrict the type of documents it stores to knowledge base rule
+cartridge JSON documents, but you could deploy other service instances and use the JPA
+accessors to manipulate the contents of your document store, or to write a document
+upload interface (I might do that some day anyhow, and just leave it disabled for
+the deployment server on my web hosting services because it would be far too much work
+to recode in PHP for a LAMP stack.  The upload capabilities would only be provided by
+a <i>Java</i>-based implementation of the service.)
+<p>
+<H3>Donations Gratefully Accepted</H3>
+<p>
+If you find any of Mark Stephen Sobkow's projects useful, you can make donations at
+<A Target="_blank" HRef="https://www.paypal.com/paypalme2/MarkSobkow">Paypal.me/MarkSobkow</A>.
+<p>
+</BODY>
+</HTML>
