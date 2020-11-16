@@ -12,5 +12,6 @@
 		<module>org.msscf.sts4training.config</module>
 		<module>org.msscf.sts4training.javafx</module>
 		<module>org.msscf.sts4training.cfbmr</module>
+		<module>org.msscf.sts4training.webdocsrv</module>
 	</modules>
 </project>
