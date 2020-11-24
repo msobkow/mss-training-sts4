@@ -66,23 +66,16 @@ sub-page <A Target="Content" HRef="org.msscf.sts4training.javafx.html">org.msscf
 <p>
 <H3>Architectural Prototypes In Progress</H3>
 <p>
-<H4org.msscf.sts4training.webdocsrv</H4>
-<p>
-The Web Document Service will provide read-only access for downloading
-a client installation's subscribed documents in order to be able
-to do things like manufacture code.  This service is intended to be
-generic; it just stores text BLOBs that specify a MIME type defining
-their text content type.  All text BLOBs must be valid in the UTF-8
-character set.  Details are on the sub-page
-<A Target="Content" HRef="org.msscf.sts4training.webdocsrv.html">org.msscf.sts4training.webdocsrv</A>.
-<p>
-<H3>Architectural Prototypes Planned For Near Future Due To Coinciding Client Needs</H3>
-<p>
 <H4>org.msscf.sts4training.cfbmr</H4>
 <p>
 The Code Forge Business Model Repository is the back-end data store for the models in a model repository
 server, which is intended to be deployed as a canned VM instance to subscribing clients.  Details are on the
-sub-page <A Target="Content" HRef="org.msscf.sts4training.cfbmr.html">org.msscf.sts4training.cfbmr</A>.
+sub-page <A Target="Content" HRef="org.msscf.sts4training.cfbmr.html">org.msscf.sts4training.cfbmr</A>.  It
+is not a fully-fleshed example of a JPA model, just the top level object.  I learned the rest doing client-specific
+work; I'll update the project to add another object or two to the hierarchy, and eventually prototype JPA object
+hierarchies (subclasses) as well.  I also believe there are some new Java types I ran across that can be used
+with JPA objects to automatically bind DATE/TIME/TIMESTAMP database attributes instead of having to do fancy
+dancing with your Java tags to make it happen with a generic Java Calendar.
 <p>
 All other MssCFe prototypes will be deferred until I have a corporation set up to own the work
 instead of me owning it personally.
